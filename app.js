@@ -1,5 +1,7 @@
 const canvas = document.getElementById("jsCanvas");
 const ctx = canvas.getContext("2d");
+const colors = document.getElementsByClassName("jsColor");
+const range = document.getElementById("jsRange");
 
 canvas.width = 700;
 canvas.height= 700;
@@ -35,16 +37,15 @@ function onMouseMove(event){
 만약에 Painting이 True값을 받게 된다면 그 좌표를 한번 읽고 거기서 부터 Stroke를 해야하는 거야 
 결국 시작이 False-그림을 그리지 않는다 이기 때문에 이렇게 반대로 뒤틀어줘야함*/
 
-function onMouseDown(event){
-    startPainting();
-}
 
 function onMouseUp(event){
     stopPainting();
 }
 
-
-
+function handleColorClick(event){
+    const color = event.target.style.backgroundColor;
+    ctx.strokeStyle = color;
+}
 
 if(canvas){
     canvas.addEventListener("mousemove", onMouseMove);
@@ -53,3 +54,15 @@ if(canvas){
     canvas.addEventListener("mouseleave", stopPainting);
 }
 
+Array.from(colors).forEach(color => 
+   color.addEventListener("click", handleColorClick)
+);
+
+
+/* 이건 내가 한거. 동영상보면서 다시 맞춰보자*/
+function handleRange(event){
+    const size = event.target.value;
+    ctx.lineWidth = size;
+}
+
+range.addEventListener("click", handleRange);
